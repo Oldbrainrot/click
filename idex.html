@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Twoje IP i lokalizacja</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 40px;
+        }
+        .box {
+            background: #fff;
+            padding: 20px;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Twoje dane</h2>
+    <p><strong>IP:</strong> <span id="ip">Ładowanie...</span></p>
+    <p><strong>Kraj:</strong> <span id="country">Ładowanie...</span></p>
+    <p><strong>Region:</strong> <span id="region">Ładowanie...</span></p>
+    <p><strong>Miasto:</strong> <span id="city">Ładowanie...</span></p>
+</div>
+
+<script>
+fetch("https://ipapi.co/json/")
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("ip").textContent = data.ip || "Brak danych";
+        document.getElementById("country").textContent = data.country_name || "Brak danych";
+        document.getElementById("region").textContent = data.region || "Brak danych";
+        document.getElementById("city").textContent = data.city || "Brak danych";
+    })
+    .catch(() => {
+        document.querySelector(".box").innerHTML = "Nie udało się pobrać danych.";
+    });
+</script>
+
+</body>
+</html>
