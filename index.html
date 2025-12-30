@@ -54,17 +54,13 @@
         <p><strong>Kraj:</strong> <span id="country">Ładowanie...</span></p>
         <p><strong>Region:</strong> <span id="region">Ładowanie...</span></p>
         <p><strong>Miasto:</strong> <span id="city">Ładowanie...</span></p>
+        <p><strong>Szerokość:</strong> <span id="lat">Ładowanie...</span></p>
+        <p><strong>Długość:</strong> <span id="lon">Ładowanie...</span></p>
         <p><strong>Przeglądarka:</strong> <span id="browser">Ładowanie...</span></p>
         <p><strong>System:</strong> <span id="platform">Ładowanie...</span></p>
         <p><strong>Język:</strong> <span id="language">Ładowanie...</span></p>
         <p><strong>Czas lokalny:</strong> <span id="time">Ładowanie...</span></p>
-        <p><strong>Szerokość:</strong> <span id="lat"></span></p>
-        <p><strong>Długość:</strong> <span id="lon"></span></p>
-        <script>
-        document.getElementById("lat").textContent = data.latitude || "Brak danych";
-        document.getElementById("lon").textContent = data.longitude || "Brak danych";
-</script>
- <p id="warning">Tak działa internet, bądź ostrożny w sieci bratku.</p>
+        <p id="warning">Tak działa internet, bądź ostrożny w sieci bratku.</p>
     </div>
 
     <footer id="footer">
@@ -77,17 +73,30 @@ document.getElementById("showBtn").addEventListener("click", function() {
     fetch("https://ipapi.co/json/")
         .then(response => response.json())
         .then(data => {
+            // Dane z IPAPI
             document.getElementById("ip").textContent = data.ip || "Brak danych";
             document.getElementById("country").textContent = data.country_name || "Brak danych";
             document.getElementById("region").textContent = data.region || "Brak danych";
             document.getElementById("city").textContent = data.city || "Brak danych";
+            document.getElementById("lat").textContent = data.latitude || "Brak danych";
+            document.getElementById("lon").textContent = data.longitude || "Brak danych";
 
-            document.getElementById("info").style.display = "block";   // pokaż dane
-            document.getElementById("footer").style.display = "block"; // pokaż RODO
+            // Dane z przeglądarki
+            document.getElementById("browser").textContent = navigator.userAgent;
+            document.getElementById("platform").textContent = navigator.platform;
+            document.getElementById("language").textContent = navigator.language;
+            document.getElementById("time").textContent = new Date().toLocaleString();
+
+            // Pokaż wszystko
+            document.getElementById("info").style.display = "block";   
+            document.getElementById("footer").style.display = "block"; 
             this.style.display = "none"; // ukryj przycisk
         })
         .catch(() => {
             document.getElementById("info").innerHTML = "Nie udało się pobrać danych.";
+            document.getElementById("info").style.display = "block";
+            document.getElementById("footer").style.display = "block";
+            this.style.display = "none";
         });
 });
 </script>
